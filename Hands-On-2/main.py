@@ -2,7 +2,7 @@ from LinearRegression import LinearRegression
 import pandas as pd
 
 def main():
-    file = 'Hands-On-2/benetton.csv'
+    file = 'benetton.csv'
     df = pd.read_csv(file)
     x_train = df['advertising'].tolist()
     y_train = df['sales'].tolist()
