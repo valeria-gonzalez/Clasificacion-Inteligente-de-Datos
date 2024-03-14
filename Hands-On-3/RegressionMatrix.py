@@ -6,8 +6,6 @@ class RegressionMatrix:
         self.x_train = x_train
         self.y_train = y_train
         self.order = order
-        # self.cols = order + 1
-        # self.rows = len(x_train)
         self.matrix = self.makeRegressionMatrix()
     
     def makeRegressionMatrix(self)-> np.array:
@@ -27,11 +25,9 @@ class RegressionMatrix:
     def multiply(self, matrix_a: np.array, matrix_b: np.array)-> np.array:
         """Multiply two matrices."""
         return np.dot(matrix_a, matrix_b)
-         
-    def transpose(self)-> np.array:
-        return np.transpose(self.matrix)
     
     def inverse(self, matrix: np.array):
+        """Find the inverse of a matrix."""
         return np.linalg.inv(matrix)
             
             

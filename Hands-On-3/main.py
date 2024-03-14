@@ -135,7 +135,7 @@ def cubic_regression(x_train, y_train, x_name, y_name):
     print(f"""
     ---------------------------------------------------------
     ---------------------------------------------------------
-    LINEAR REGRESSION EQUATION ( y = a + bx + cx^2 + dx^3 ):
+    CUBIC REGRESSION EQUATION ( y = a + bx + cx^2 + dx^3 ):
     --------------------------------------------------------
     
     {y_name} = {round(a, 3)} + {round(bx, 3)} {x_name} + {round(cx2, 3)} {x_name}^2 + {round(dx3, 3)} {x_name}^3  
