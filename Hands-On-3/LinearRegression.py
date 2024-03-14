@@ -4,7 +4,6 @@ from math import sqrt
 
 class LinearRegression:
     """Linear regression predictive analysis model."""
-    
     def __init__(self, x_train: list, y_train: list) -> None:
         self.x_train = x_train
         self.y_train = y_train
@@ -72,6 +71,7 @@ class LinearRegression:
         one = sqrt(sum([((x - x_mean) ** 2) for x in self.x_train]))
         two = sqrt(sum([((y - y_mean) ** 2) for y in self.y_train]))
         denominator = one * two
+        
         correlation = numerator / denominator
         determination = correlation ** 2
         

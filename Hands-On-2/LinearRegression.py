@@ -61,19 +61,20 @@ class LinearRegression:
         if self.x_sum == None:
             self.computeSums()
             
-        x_train_size = len(self.x_train)
+        n = len(self.x_train)
         
-        a = ((self.y_sum * self.x2_sum) - (self.x_sum * self.xy_sum)) 
-        a /= ((x_train_size * self.x2_sum) - (self.x_sum ** 2))
+        a = (self.y_sum * self.x2_sum) - (self.x_sum * self.xy_sum)
+        a /= (n * self.x2_sum) - (self.x_sum ** 2)
         
-        bx = ((x_train_size * self.xy_sum) - (self.x_sum * self.y_sum)) 
-        bx /= ((x_train_size * self.x2_sum) - (self.x_sum ** 2))
+        bx = (n * self.xy_sum) - (self.x_sum * self.y_sum)
+        bx /= (n * self.x2_sum) - (self.x_sum ** 2)
         
         a = round(a)
         bx = round(bx)
+        
         return a, bx
         
-    def computeCorrelationCoefficient(self)-> tuple:
+    def correlationCoefficient(self)-> tuple:
         """Compute the correlation and determination coefficients.
         
         Returns:
@@ -82,11 +83,11 @@ class LinearRegression:
         if self.x_sum == None:
             self.computeSums()
             
-        x_train_size = len(self.x_train)
+        n = len(self.x_train)
         y2_sum = sum([y**2 for y in self.y_train])
         
-        numerator = ((x_train_size * self.xy_sum) - (self.x_sum * self.y_sum)) 
-        denominator = (sqrt((x_train_size * self.x2_sum - (self.x_sum ** 2)) * (x_train_size * y2_sum - (self.y_sum ** 2))))
+        numerator = (n * self.xy_sum) - (self.x_sum * self.y_sum)
+        denominator = sqrt((n * self.x2_sum - (self.x_sum ** 2)) * (n * y2_sum - (self.y_sum ** 2)))
         
         correlation = numerator / denominator
         determination = correlation ** 2

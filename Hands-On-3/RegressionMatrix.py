@@ -1,5 +1,4 @@
 import numpy as np
-import numpy.typing as npt
 
 class RegressionMatrix:
     def __init__(self, x_train: list, y_train: list, order: int)-> None:
@@ -15,7 +14,6 @@ class RegressionMatrix:
             row = [x**i for i in range(self.order + 1)]
             matrix.append(row)
             
-        # print(np.array(matrix))
         return np.array(matrix)
     
     def transpose(self)-> np.array:
@@ -28,13 +26,4 @@ class RegressionMatrix:
     
     def inverse(self, matrix: np.array):
         """Find the inverse of a matrix."""
-        return np.linalg.inv(matrix)
-            
-            
-            
-        
-    
-            
-            
-        
-        
+        return np.linalg.inv(matrix)       

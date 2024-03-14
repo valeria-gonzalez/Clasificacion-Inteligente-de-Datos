@@ -18,7 +18,7 @@ def main():
     y_predict = model.predict(x_train)
     
     # Correlation and determination coefficients
-    correlation_coeff, determination_coeff = model.computeCorrelationCoefficient()
+    correlation_coeff, determination_coeff = model.correlationCoefficient()
     
     # Predict five values that aren't in the dataset
     advertising = [700, 2000, 300, 225, 3000]

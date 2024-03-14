@@ -35,7 +35,7 @@ def linear_regression(x_train, y_train, x_name, y_name):
     LINEAR REGRESSION EQUATION ( y = a + bx ):
     -----------------------------------------
     
-    {y_name} = {round(a, 3)} + {round(bx, 3)} {x_name} 
+    {y_name} = {round(a, 5)} + {round(bx, 5)} {x_name} 
     
     ----------------------------------------
     Predicted values for known batch sizes:
@@ -61,9 +61,9 @@ def linear_regression(x_train, y_train, x_name, y_name):
     ----------------------------------------
     Correlation and Determination Coefficients:
     ----------------------------------------
-    Correlation: {round(correlation, 4)}
+    Correlation: {round(correlation, 5)}
     
-    Determination: {round(determination, 4)}
+    Determination: {round(determination, 5)}
     """)
     
 def quadratic_regression(x_train, y_train, x_name, y_name):
@@ -87,7 +87,7 @@ def quadratic_regression(x_train, y_train, x_name, y_name):
     QUADRATIC REGRESSION EQUATION ( y = a + bx + cx^2 ):
     ---------------------------------------------------
     
-    {y_name} = {round(a, 3)} + {round(bx, 3)} {x_name} + {round(cx2, 3)} {x_name}^2
+    {y_name} = {round(a, 5)} + {round(bx, 5)} {x_name} + {round(cx2, 5)} {x_name}^2
     
     ----------------------------------------
     Predicted values for known batch sizes:
@@ -113,9 +113,9 @@ def quadratic_regression(x_train, y_train, x_name, y_name):
     ----------------------------------------
     Correlation and Determination Coefficients:
     ----------------------------------------
-    Correlation: {round(correlation, 4)}
+    Correlation: {round(correlation, 5)}
     
-    Determination: {round(determination, 4)}   
+    Determination: {round(determination, 5)}
     """)
     
 def cubic_regression(x_train, y_train, x_name, y_name):
@@ -138,7 +138,7 @@ def cubic_regression(x_train, y_train, x_name, y_name):
     CUBIC REGRESSION EQUATION ( y = a + bx + cx^2 + dx^3 ):
     --------------------------------------------------------
     
-    {y_name} = {round(a, 3)} + {round(bx, 3)} {x_name} + {round(cx2, 3)} {x_name}^2 + {round(dx3, 3)} {x_name}^3  
+    {y_name} = {round(a, 5)} + {round(bx, 5)} {x_name} + {round(cx2, 5)} {x_name}^2 + {round(dx3, 5)} {x_name}^3  
     
     ----------------------------------------
     Predicted values for known batch sizes:
@@ -164,9 +164,9 @@ def cubic_regression(x_train, y_train, x_name, y_name):
     ----------------------------------------
     Correlation and Determination Coefficients:
     ----------------------------------------
-    Correlation: {round(correlation, 4)}
+    Correlation: {round(correlation, 5)}
     
-    Determination: {round(determination, 4)}   
+    Determination: {round(determination, 5)}  
     """)
     
 if __name__ == "__main__":
