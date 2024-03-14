@@ -1,97 +1,94 @@
 from math import sqrt
 
 class LinearRegression:
-    def __init__(self) -> None:
-        self.beta0 = 0
-        self.beta1 = 0
+    """Linear regression predictive analysis model."""
     
-    def fit(self, x_train: list, y_train: list) -> tuple: 
-        """Fit the model to the dataset
-        Args: 
-            x_train (list): list of features
-            y_train (list): list of target values
-        Returns: 
-            tuple of beta values
-        """
-        x_sum, y_sum, xy_sum, x2_sum = self.compute_sums(x_train, y_train)
-        self.beta0, self.beta1 = self.compute_betas(
-            x_sum, 
-            y_sum, 
-            xy_sum, 
-            x2_sum, 
-            len(x_train)
-        )
+    def __init__(self, x_train: list, y_train: list) -> None:
+        self.x_train = x_train
+        self.y_train = y_train
+        self.x_sum = None
+        self.y_sum = None
+        self.xy_sum = None
+        self.x2_sum = None
+        self.a = None
+        self.bx = None
         
-        return self.beta0, self.beta1
+    def fit(self)-> tuple: 
+        """Fit the linear regression model to the dataset.
+        The linear equation has the form: \n
+        y = a + bx
+        
+        Returns: 
+            tuple (float, float): coefficients (a, bx) of the linear equation.
+        """
+        self.a, self.bx = self.computeLinearEquation()
+        
+        return self.a, self.bx
     
-    def predict(self, x_test: list) -> list:
+    def predict(self, x_test: list)-> list:
         """Predict the target value for the given features
+        
         Args: 
             x_test (list): list of features
+        
         Returns: 
-            list of predicted target values
+            list: predicted target values
         """
-        y_pred = [self.beta0 + (self.beta1 * x) for x in x_test]
+        y_pred = [self.a + (self.bx * x) for x in x_test]
         
         return y_pred
     
-    def compute_sums(self, x_train: list, y_train: list) -> tuple:
+    def computeSums(self)-> None:
         """Compute the sums needed for the linear regression model:
-        sum of x values, sum of y values, sum of x*y values, sum of x^2 values
-        Args: 
-            x_train (list): list of features
-            y_train (list): list of target values
-        Returns: 
-            tuple of sums 
+        - Sum of x values
+        - Sum of y values
+        - Sum of x*y values
+        - Sum of x^2 values
         """
-        x_sum = sum(x_train)
-        y_sum = sum(y_train)
-        xy_sum = sum([x*y for x, y in zip(x_train, y_train)])
-        x2_sum = sum([x**2 for x in x_train])
-        
-        return x_sum, y_sum, xy_sum, x2_sum
+        self.x_sum = sum(self.x_train)
+        self.y_sum = sum(self.y_train)
+        self.xy_sum = sum([x*y for x, y in zip(self.x_train, self.y_train)])
+        self.x2_sum = sum([x**2 for x in self.x_train])
     
-    def compute_betas(
-        self, x_sum: float, y_sum: float, xy_sum: float, x2_sum: float, n: int
-    ) -> tuple:
-        """Compute the beta0 and beta1 values for the linear regression model
-
-        Args:
-            x_sum (int): sum of x values
-            y_sum (int): sum of y values
-            xy_sum (int): sum of x*y values
-            x2_sum (int): sum of x^2 values
-        Returns: 
-            tuple of beta values
-        """
-        beta0 = ((y_sum * x2_sum) - (x_sum * xy_sum)) 
-        beta0 /= ((n * x2_sum) - (x_sum ** 2))
+    def computeLinearEquation(self)-> tuple:
+        """Compute the coefficients for the linear regression equation.\n
+        The linear equation has the form: \n
+        y = a + bx
         
-        beta1 = ((n * xy_sum) - (x_sum * y_sum)) 
-        beta1 /= ((n * x2_sum) - (x_sum ** 2))
-        
-        return round(beta0), round(beta1)
-    
-    def compute_correlation_deter_coeff(
-        self, x_train: list, y_train: list
-    ) -> tuple:
-        """Compute the correlation and determination coefficients.
-
-        Args:
-            x_train (list): list of features
-            y_train (list): list of target values
         Returns:
-            tuple of correlation and determination coefficients
+            tuple (float, float): coefficients (a, bx) of the linear equation.
         """
-        n = len(x_train)
-        x_sum, y_sum, xy_sum, x2_sum = self.compute_sums(x_train, y_train)
-        y2_sum = sum([y**2 for y in y_train])
+        if self.x_sum == None:
+            self.computeSums()
+            
+        x_train_size = len(self.x_train)
         
-        correlation = ((n * xy_sum) - (x_sum * y_sum)) 
-        correlation /= (sqrt((n * x2_sum - (x_sum ** 2)) * (n * y2_sum - (y_sum ** 2))))
+        a = ((self.y_sum * self.x2_sum) - (self.x_sum * self.xy_sum)) 
+        a /= ((x_train_size * self.x2_sum) - (self.x_sum ** 2))
         
+        bx = ((x_train_size * self.xy_sum) - (self.x_sum * self.y_sum)) 
+        bx /= ((x_train_size * self.x2_sum) - (self.x_sum ** 2))
+        
+        a = round(a)
+        bx = round(bx)
+        return a, bx
+        
+    def computeCorrelationCoefficient(self)-> tuple:
+        """Compute the correlation and determination coefficients.
+        
+        Returns:
+            tuple (float, float): Correlation and determination coefficients, respectively
+        """
+        if self.x_sum == None:
+            self.computeSums()
+            
+        x_train_size = len(self.x_train)
+        y2_sum = sum([y**2 for y in self.y_train])
+        
+        numerator = ((x_train_size * self.xy_sum) - (self.x_sum * self.y_sum)) 
+        denominator = (sqrt((x_train_size * self.x2_sum - (self.x_sum ** 2)) * (x_train_size * y2_sum - (self.y_sum ** 2))))
+        
+        correlation = numerator / denominator
         determination = correlation ** 2
         
         return correlation, determination
-    
-    
