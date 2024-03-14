@@ -16,10 +16,6 @@ def main():
     
     # Predict Y for given X
     y_predict = model.predict(x_train)
-    predictions_df = pd.DataFrame()
-    predictions_df['advertising'] = x_train
-    predictions_df['sales'] = y_train
-    predictions_df['predicted sales'] = y_predict
     
     # Correlation and determination coefficients
     correlation_coeff, determination_coeff = model.computeCorrelationCoefficient()
@@ -27,10 +23,6 @@ def main():
     # Predict five values that aren't in the dataset
     advertising = [700, 2000, 300, 225, 3000]
     sales_predictions = model.predict(advertising)
-    
-    predictions_df = pd.DataFrame()
-    predictions_df['sales'] = sales_predictions
-    predictions_df['advertising'] = advertising
     
     print(f"""
     -----------------------------------------
