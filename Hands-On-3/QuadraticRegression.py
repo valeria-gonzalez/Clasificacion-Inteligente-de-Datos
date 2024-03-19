@@ -64,14 +64,16 @@ class QuadraticRegression:
         Returns:
             tuple(float, float): correlation and determination coefficient.
         """
-        x_mean = sum(self.x_train) / len(self.x_train)
+        if(self.a == None): 
+            self.fit()
+            
+        y_predict = self.predict(self.x_train)
         y_mean = sum(self.y_train) / len(self.y_train)
-        numerator = sum([((x - x_mean) * (y - y_mean)) for x, y in zip(self.x_train, self.y_train)])
-        one = sqrt(sum([((x - x_mean) ** 2) for x in self.x_train]))
-        two = sqrt(sum([((y - y_mean) ** 2) for y in self.y_train]))
-        denominator = one * two
         
-        correlation = numerator / denominator
-        determination = correlation ** 2
+        numerator = sum([((y_pred - y_mean) ** 2) for y_pred in y_predict])
+        denominator = sum([((y - y_mean) ** 2) for y in self.y_train])
+        determination = numerator / denominator
+        
+        correlation = sqrt(determination)
         
         return correlation, determination
