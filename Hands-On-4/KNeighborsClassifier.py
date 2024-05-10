@@ -12,6 +12,7 @@ class KNeighborsClassifier:
         self.classes = None # class labels known to the classifier
         self.n_features_in = None # no of features seen during fit
         self.n_samples_fit = None # number of samples in fitted data
+        self.y_predict = None
         
     def fit(self) -> None:
         """Fit the k-nearest neighbors classifier from the training set.
@@ -22,7 +23,7 @@ class KNeighborsClassifier:
     
     def kneighbors(self, X_test: np.array, return_distance: bool = True) -> list:
         """Find the k-neighbors of multiple point queries.
-        Returns two different arrays with indices of and distances to the neighbors of each point.
+        Returns two different arrays with distances and indices of the neighbors of each query.
         """
         neigh_dist = []
         neigh_ind = []
@@ -47,22 +48,28 @@ class KNeighborsClassifier:
         Returns class labels for each data sample.
         """
         neigh_ind = self.kneighbors(X_test, False)
-        y_labels = []
+        self.y_predict = []
         
         for nearest_neigh in neigh_ind:
             class_count = defaultdict(int)
             for index in nearest_neigh:
                 class_count[self.y[index]] += 1
             class_label = max(class_count, key = class_count.get)
-            y_labels.append(class_label)
+            self.y_predict.append(class_label)
         
-        return y_labels
+        return self.y_predict 
             
-    def score(self) -> float:
+    def score(self, y:np.array) -> float:
         """Return the mean accuracy on the given test data and labels
         Return mean accuracy of self.predict w.r.t y
         """
-        pass
+        matches = 0
+        
+        for real_class, predict_class in zip(y, self.y_predict):
+            if real_class == predict_class:
+                matches += 1
+                
+        return matches * 100 / len(y)
     
     def __calcBruteDistance(self, X_test: np.array, return_distance: bool = True):
         """Find the k-neighbors of a point.
